@@ -1,0 +1,65 @@
+function updateCartDrawer() {
+    const cartUrl = `${window.Shopify.routes.root}cart?section_id=cart-drawer`;
+
+
+
+
+    fetch(cartUrl)
+      .then((res) => res.text())
+      .then((html) => {
+        // console.log("Fetched Cart HTML:", html);
+
+
+
+
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = html;
+
+
+
+
+        // console.log("TempDiv Parsed:", tempDiv);
+
+
+
+
+        const newCartDrawer = tempDiv.querySelector('cart-drawer');
+        console.log('Parsed <cart-drawer> element:', newCartDrawer);
+
+
+
+
+        if (newCartDrawer) {
+          const existingCartDrawer = document.querySelector('cart-drawer');
+
+
+
+
+          if (existingCartDrawer) {
+            existingCartDrawer.replaceWith(newCartDrawer);
+            console.log('Cart drawer updated.');
+          } else {
+            document.body.appendChild(newCartDrawer);
+            console.log('Cart drawer added.');
+          }
+
+
+
+
+
+
+
+
+
+
+
+
+          newCartDrawer.classList.add('animate', 'active');
+          // document.body.classList.add('cart-drawer-open');
+          // console.log('Cart drawer opened.');
+        }
+      })
+      .catch((err) => console.error("Cart fetch error:", err));
+  }
+
+
