@@ -1,1 +1,27 @@
  document.dispatchEvent(new CustomEvent('cart:build'));
+
+$(document).on('click', '.pro_atc_btn', function(e) {
+  e.preventDefault();
+
+  var var_id = $(this).attr('product_id');
+  var qty = 1;
+
+  $.ajax({
+    type: 'POST',
+    url: '/cart/add.js',
+    data: { id: var_id, quantity: qty },
+    dataType: 'json',
+    success: function() {
+      // Tell the theme to rebuild the drawer
+      document.dispatchEvent(new CustomEvent('cart:build'));
+
+      // Open the drawer
+      $('body').addClass('js-drawer-open');
+      $('#CartDrawer').addClass('drawer--is-open');
+    },
+    error: function(xhr) {
+      console.error(xhr.responseText);
+      alert('Error adding to cart');
+    }
+  });
+});
