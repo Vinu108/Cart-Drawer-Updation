@@ -1,0 +1,9 @@
+$.get(window.location.pathname + '?section_id=header', function (response) {
+
+    var drawer = $(response).find('.cart-drawer__inner').clone();
+
+    $('.cart-drawer__inner').replaceWith(drawer);
+
+    document.querySelector('cart-drawer-component')?.open();
+
+});
